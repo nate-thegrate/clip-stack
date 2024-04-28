@@ -71,19 +71,32 @@ class ClipFieldHeader extends StatelessWidget {
   }
 }
 
-class ClipFields extends StatelessWidget {
+class ClipFields extends StatefulWidget {
   const ClipFields({required this.items, super.key});
-  final ClipstackItems items;
+  final List<ClipstackItem> items;
 
+  @override
+  State<ClipFields> createState() => _ClipFieldsState();
+}
+
+class _ClipFieldsState extends State<ClipFields> {
   void copy(String text) {
     Clipboard.setData(ClipboardData(text: text));
     navigator.showSnackBar(const SnackBar(content: Text('copied!')));
   }
 
+  bool addD4 = false;
   @override
   Widget build(BuildContext context) {
+    final d4 = ClipItem(label: 'd20 ', value: addD4 ? 'd20+d4 ' : ' d20 ', compact: true);
+    late final items = ClipstackItems(widget.items.toList()..insert(4, d4));
     return ListView(
       children: [
+        SwitchListTile(
+          title: const Text('add extra d4'),
+          value: addD4,
+          onChanged: (_) => setState(() => addD4 = !addD4),
+        ),
         for (final (i, item) in items.indexed)
           switch (item) {
             final ClipItem item => ClipField(item, onTap: () => copy(items.clipboardValue(i))),

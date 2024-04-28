@@ -19,12 +19,13 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ">=3.0.0"
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/
+  # assets:
+  #   - assets/
 
   fonts:
     - family: roboto mono
@@ -35,3 +36,8 @@ flutter:
     - family: pretendard
       fonts:
         - asset: assets/fonts/pretendard.ttf
+
+flutter_launcher_icons:
+  windows:
+    generate: true
+    image_path: "assets/app_icons/clip_stack.png"

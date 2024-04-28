@@ -1,10 +1,8 @@
 import 'package:clip_stack/home/clip_fields.dart';
 import 'package:clip_stack/home/clip_item.dart';
-import 'package:clip_stack/home/markdown_editor.dart';
 import 'package:clip_stack/navigator.dart';
 import 'package:clip_stack/settings/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,8 +16,8 @@ const template = [
   ClipItem(label: 'adv', value: '2d20/kh', compact: true),
   ClipItem(label: 'disadv', value: '2d20/kl', compact: true),
   ClipHeader(label: 'mods', value: 4),
-  ClipItem(label: ' str', value: '+0', compact: true),
-  ClipItem(label: ' dex', value: '+0', compact: true),
+  ClipItem(label: ' str', value: '', compact: true),
+  ClipItem(label: ' dex', value: '', compact: true),
   ClipItem(label: ' con', value: '+3', compact: true),
   ClipItem(label: ' int', value: '+4', compact: true),
   ClipItem(label: ' wis', value: '+2', compact: true),
@@ -33,7 +31,8 @@ const template = [
   ClipHeader(label: 'Strength', value: 5),
   ClipItem(label: 'Athletics', value: 'roll d20 str', compact: true),
   ClipHeader(label: 'Dexterity', value: 5),
-  ClipItem(label: 'Acrobatics, Sleight of Hand, Stealth', value: 'roll d20 dex', compact: true),
+  ClipItem(label: 'Acrobatics, Sleight of Hand', value: 'roll d20 dex', compact: true),
+  ClipItem(label: 'Stealth', value: 'roll disadv dex', compact: true),
   ClipHeader(label: 'Intelligence', value: 5),
   ClipItem(label: 'History (stonework)', value: 'roll d20 int expertise', compact: true),
   ClipItem(label: 'History, Nature', value: 'roll d20 int', compact: true),
@@ -55,19 +54,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () async {
-              if (!markdownEditing) {
-                context.read<Editing>().toggle();
-                return;
-              }
-              final newMarkdown = navigator.push<String>(MarkdownEditor(clipItems.markdown));
-              if (await newMarkdown case final markdown?) {
-                setState(() => clipItems = ClipstackItems.fromMarkdown(markdown));
-              }
-            },
-            icon: Icon(context.watch<Editing>().value ? Icons.done : Icons.edit),
-          ),
+          // IconButton(
+          //   onPressed: () async {
+          //     if (!markdownEditing) {
+          //       context.read<Editing>().toggle();
+          //       return;
+          //     }
+          //     final newMarkdown = navigator.push<String>(MarkdownEditor(clipItems.markdown));
+          //     if (await newMarkdown case final markdown?) {
+          //       setState(() => clipItems = ClipstackItems.fromMarkdown(markdown));
+          //     }
+          //   },
+          //   icon: Icon(context.watch<Editing>().value ? Icons.done : Icons.edit),
+          // ),
           IconButton(
             onPressed: () => navigator.push(const SettingsScreen()),
             icon: const Icon(Icons.settings),
